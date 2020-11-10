@@ -24,12 +24,21 @@ public class GameView {
 
         System.out.println("\n");
         System.out.println("**********************************************************");
-        System.out.println("*          Precione <Enter> para iniciar o jogo          *");
+        System.out.println("*          Precione <Enter> para iniciar                 *");
         System.out.println("**********************************************************");
+        System.out.println(gc.gameModel.getRaffleds());
 
         Scanner kb = new Scanner(System.in);
-        kb.nextLine();
-        gc.nextColor();
+        try {
+            kb.nextLine();
+            gc.nextColor();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            gc.nextColor();
+        } finally {
+            kb.close();
+        }
+        
         
     }
 
@@ -110,4 +119,39 @@ public class GameView {
             System.err.println(e);
         }
     }
+
+    public static int makeQuestion(GameController gc) {
+        Header.make();
+        System.out.print("\n");
+        System.out.println( Color.RED + "              ************" + Color.GREEN + "      ************              ");
+        System.out.println( Color.RED + "              ************" + Color.GREEN + "      ************              ");
+        System.out.println( Color.RED + "              ************" + Color.GREEN + "      ************              ");
+        System.out.println( Color.RED + "              ************" + Color.GREEN + "      ************              ");
+        System.out.print("\n\n");
+        System.out.println( Color.CYAN + "              ************" + Color.YELLOW + "      ************              ");
+        System.out.println( Color.CYAN + "              ************" + Color.YELLOW + "      ************              ");
+        System.out.println( Color.CYAN + "              ************" + Color.YELLOW + "      ************              ");
+        System.out.println( Color.CYAN + "              ************" + Color.YELLOW + "      ************              ");
+        System.out.print(Color.RESET);
+
+        System.out.println("\n");
+        System.out.println("**********************************************************");
+        System.out.println(" Digite o código das cores na sequencia apresentada       ");
+        System.out.println(" 1 ->Vermelho, 2 ->Verde, 3-> Azul, 4-> Amarelo           ");
+        System.out.println(gc.gameModel.getRaffleds());
+        System.out.println(gc.gameModel.getResponses());
+        System.out.print(" Resposta: ");
+
+        Scanner kb = new Scanner(System.in);
+        try {
+            return Integer.parseInt(kb.nextLine());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return -1;
+        }
+        finally {
+            //kb.close();
+        }
+    }
+
 }

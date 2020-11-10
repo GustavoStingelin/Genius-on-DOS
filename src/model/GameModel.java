@@ -5,38 +5,52 @@ import java.util.List;
 
 public class GameModel {
 
-    protected Integer sorted;
+    protected Integer raffled;
     protected Integer actualIndex;
-    protected List<Integer> sorteds = new ArrayList<>();
+    protected List<Integer> raffleds = new ArrayList<>();
+    protected List<Integer> responses = new ArrayList<>();
 
     public GameModel() {
 
     }
 
-    public Integer getSorted() {
-        return this.sorted;
+    public Integer getRaffled() {
+        return this.raffled;
     }
     public Integer getActualIndex() {
         return this.actualIndex;
     }
 
-    public void setSorted(Integer sorted) {
-        this.sorted = sorted;
+    public void setRaffled(Integer raffled) {
+        this.raffled = raffled;
     }
+
     public void setActualIndex(Integer actualIndex) {
         this.actualIndex = actualIndex;
     }
 
-    public List<Integer> getSorteds() {
-        return this.sorteds;
+    public List<Integer> getRaffleds() {
+        return this.raffleds;
     }
 
-    public void setSorteds(List<Integer> sorteds) {
-        this.sorteds = sorteds;
+    public List<Integer> getResponses() {
+        return this.responses;
     }
 
-    public void addSortedOnSorteds(Integer sorted) {
-        sorteds.add(sorted);
+    public void setRaffleds(List<Integer> raffleds) {
+        this.raffleds = raffleds;
+    }
+
+    public void addRaffledOnRaffleds(Integer raffled) {
+        raffleds.add(raffled);
+    }
+
+    public void addResponseOnResponses(Integer response) {
+        responses.add(response);
+    }
+
+    public void dumpRaffleds() {
+        raffleds.clear();
     }
 
 }
