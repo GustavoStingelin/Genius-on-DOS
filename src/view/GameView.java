@@ -26,7 +26,7 @@ public class GameView {
         System.out.println("**********************************************************");
         System.out.println("*          Precione <Enter> para iniciar                 *");
         System.out.println("**********************************************************");
-        System.out.println(gc.gameModel.getRaffleds());
+        //System.out.println(gc.gameModel.getRaffleds());
 
         Scanner kb = new Scanner(System.in);
         try {
@@ -138,9 +138,8 @@ public class GameView {
         System.out.println("**********************************************************");
         System.out.println(" Digite o código das cores na sequencia apresentada       ");
         System.out.println(" 1 ->Vermelho, 2 ->Verde, 3-> Azul, 4-> Amarelo           ");
-        System.out.println(gc.gameModel.getRaffleds());
-        System.out.println(gc.gameModel.getResponses());
-        System.out.print(" Resposta: ");
+        //System.out.println(gc.gameModel.getRaffleds());
+        System.out.print("Respostas: " + gc.gameModel.getResponses() + " -> ");
 
         Scanner kb = new Scanner(System.in);
         try {
@@ -154,4 +153,34 @@ public class GameView {
         }
     }
 
+    public static void gameOver(GameController gc) {
+        Header.make();
+        System.out.println();
+        System.out.println("                       GAME OVER                          ");
+        System.out.println("  Score: " + (gc.gameModel.getRaffleds().size() - 1));
+        System.out.println("  Sequência correta: " + gc.gameModel.getRaffleds());
+        System.out.println("|________________________________________________________|");
+        System.out.println();
+        System.out.println("  1 ->Jogar Novamente, 2 ->Salvar Recorde");
+        System.out.print("  Escolha: ");
+        Scanner kb = new Scanner(System.in);
+        try {
+            int response = Integer.parseInt(kb.nextLine());
+            if (response == 1) {
+                gc.init();
+            }
+            else if (response == 2) {
+                System.out.println("vai salvar aqui");
+                kb.nextLine();
+                gc.init();
+            }
+            else {
+                gameOver(gc);
+            }
+        } catch (Exception e) {
+            gameOver(gc);
+        } finally {
+            kb.close();
+        }
+    }
 }

@@ -53,4 +53,7 @@ public class GameModel {
         raffleds.clear();
     }
 
+    public void dumpResponses() {
+        responses.clear();
+    }
 }

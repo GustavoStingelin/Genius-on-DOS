@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import model.GameModel;
 import view.GameView;
@@ -13,6 +14,7 @@ public class GameController {
     }
 
     public void init() {
+        gameModel.dumpResponses();
         gameModel.dumpRaffleds();
         gameModel.addRaffledOnRaffleds(raffleColor());
         gameModel.setActualIndex(0);
@@ -31,13 +33,20 @@ public class GameController {
             GameView.showColor(gameModel.getRaffleds().get(gameModel.getActualIndex() - 1), 1500, this);
         }
         else {
-            int response = takeResponse();
-            if (response == gameModel.getRaffleds().get(gameModel.getActualIndex() - 1)) {
-                nextLevel();
+            for (Integer raffled : gameModel.getRaffleds()) {
+                int response = takeResponse();
+                if (response == raffled.intValue()) {
+                    gameModel.addResponseOnResponses(response);
+                }
+                else {
+                    GameView.gameOver(this);
+                }
             }
-            else {
-                System.out.println("Errou");
-            }
+            System.out.println("Acertou!! Precione <Enter> para o próximo nível");
+            Scanner kb = new Scanner(System.in);
+            kb.nextLine();
+            gameModel.dumpResponses();
+            nextLevel();
         }
     }
 
