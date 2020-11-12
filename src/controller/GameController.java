@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import model.GameModel;
+import model.ScoreModel;
 import view.GameView;
 
 public class GameController {
@@ -65,6 +66,14 @@ public class GameController {
     public int raffleColor() {
         Random random = new Random();
         return random.nextInt(4) + 1;
+    }
+
+    public void saveScore(String player, int score, int rounds) {
+        ScoreModel scoreModel = new ScoreModel();
+        scoreModel.player = player;
+        scoreModel.rounds = rounds;
+        scoreModel.score = score;
+        scoreModel.save();
     }
 
 }

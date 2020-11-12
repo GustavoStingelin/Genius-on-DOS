@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 
 import controller.GameController;
+import controller.HomeController;
 import helpers.Color;
 import view.components.Header;
 
@@ -157,7 +158,8 @@ public class GameView {
         Header.make();
         System.out.println();
         System.out.println("                       GAME OVER                          ");
-        System.out.println("  Score: " + (gc.gameModel.getRaffleds().size() - 1));
+        System.out.println("  Rodadas: " + (gc.gameModel.getRaffleds().size() - 1));
+        System.out.println("  Score: " + (int)Math.floor((((gc.gameModel.getRaffleds().size() - 1) / 3) * 450)));
         System.out.println("  Sequência correta: " + gc.gameModel.getRaffleds());
         System.out.println("|________________________________________________________|");
         System.out.println();
@@ -170,9 +172,10 @@ public class GameView {
                 gc.init();
             }
             else if (response == 2) {
-                System.out.println("vai salvar aqui");
-                kb.nextLine();
-                gc.init();
+                System.out.println("Digite o nome de jogador para salvar:");
+                String player = kb.nextLine();
+                gc.saveScore(player, (int)Math.floor((((gc.gameModel.getRaffleds().size() - 1) / 3) * 450)), (gc.gameModel.getRaffleds().size() - 1));
+                new HomeController().init();
             }
             else {
                 gameOver(gc);
@@ -183,4 +186,8 @@ public class GameView {
             kb.close();
         }
     }
+
+
+
+
 }
