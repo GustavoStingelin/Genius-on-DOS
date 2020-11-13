@@ -9,6 +9,7 @@ public class GameModel {
     protected Integer actualIndex;
     protected List<Integer> raffleds = new ArrayList<>();
     protected List<Integer> responses = new ArrayList<>();
+    protected Integer attempts = 0;
 
     public GameModel() {
 

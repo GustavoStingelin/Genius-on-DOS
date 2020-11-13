@@ -68,11 +68,10 @@ public class GameController {
         return random.nextInt(4) + 1;
     }
 
-    public void saveScore(String player, int score, int rounds) {
+    public void saveScore(String player, int rounds) {
         ScoreModel scoreModel = new ScoreModel();
         scoreModel.player = player;
         scoreModel.rounds = rounds;
-        scoreModel.score = score;
         scoreModel.save();
     }
 

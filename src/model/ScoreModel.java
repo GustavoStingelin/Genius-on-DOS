@@ -1,11 +1,13 @@
 package model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import config.App;
 
 public class ScoreModel extends Model {
 
     public String player;
-    public Integer score;
     public Integer rounds;
 
     public ScoreModel() {
@@ -13,7 +15,10 @@ public class ScoreModel extends Model {
 
     @Override
     public void save() {
-        String[] aStrings = new String[] { player, score.toString(), rounds.toString() };
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
+        
+        String[] aStrings = new String[] { player, rounds.toString(), sfd.format(date)};
         super.save(aStrings, App.dbFile("score.txt"));
     }
 
