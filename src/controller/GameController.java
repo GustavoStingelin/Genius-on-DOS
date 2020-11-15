@@ -17,6 +17,7 @@ public class GameController {
     public void init() {
         gameModel.dumpResponses();
         gameModel.dumpRaffleds();
+        gameModel.dumpAttempt();
         gameModel.addRaffledOnRaffleds(raffleColor());
         gameModel.setActualIndex(0);
         GameView.make(this);
@@ -24,6 +25,7 @@ public class GameController {
 
     public void nextLevel() {
         gameModel.addRaffledOnRaffleds(raffleColor());
+        gameModel.dumpAttempt();
         gameModel.setActualIndex(0);
         GameView.make(this);
     }
@@ -35,11 +37,18 @@ public class GameController {
         }
         else {
             for (Integer raffled : gameModel.getRaffleds()) {
-                int response = takeResponse();
+                int response;
+                do {
+                    response = takeResponse();
+                } while (response <= 0);
+
                 if (response == raffled.intValue()) {
                     gameModel.addResponseOnResponses(response);
                 }
                 else {
+                    System.out.println("res: " + response + " - raf: " + raffled.intValue());
+                    Scanner kb = new Scanner(System.in);
+                    kb.nextLine();
                     GameView.gameOver(this);
                 }
             }
@@ -54,14 +63,20 @@ public class GameController {
     private int takeResponse() {
         int response = GameView.makeQuestion(this);
         if (response >= 1 && response <= 4) {
+            gameModel.tryAttempt();
             return response;
         }
+        else if (response == 0 && gameModel.haveAttempt()) {
+            gameModel.tryAttempt();
+            gameModel.setActualIndex(0);
+            gameModel.dumpResponses();
+            nextColor();
+            return -1;
+        }
         else {
-            takeResponse();
-            return 0;
+            return -2;
         }
     }
-
 
     public int raffleColor() {
         Random random = new Random();

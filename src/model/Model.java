@@ -23,7 +23,7 @@ public abstract class Model {
             }
             buffWrite.append(line + "\n");
             buffWrite.close();
-            System.out.println("Score salvo!");
+            System.out.println("Salvo com sucesso!");
         } catch (Exception e) {
             System.out.println("Não foi possível salvar...");
             System.err.println(e.getMessage());

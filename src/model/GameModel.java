@@ -9,10 +9,22 @@ public class GameModel {
     protected Integer actualIndex;
     protected List<Integer> raffleds = new ArrayList<>();
     protected List<Integer> responses = new ArrayList<>();
-    protected Integer attempts = 0;
+    protected Integer attempt = 0;
 
     public GameModel() {
 
+    }
+
+    public boolean haveAttempt() {
+        return (attempt > 1) ? false : true;
+    }
+
+    public void tryAttempt() {
+        attempt += 1;
+    }
+
+    public void dumpAttempt() {
+        attempt = 0;
     }
 
     public Integer getRaffled() {

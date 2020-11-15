@@ -32,9 +32,11 @@ public class GameView {
         Scanner kb = new Scanner(System.in);
         try {
             kb.nextLine();
+            gc.gameModel.tryAttempt();
             gc.nextColor();
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            gc.gameModel.tryAttempt();
             gc.nextColor();
         } finally {
             kb.close();
@@ -138,7 +140,13 @@ public class GameView {
         System.out.println("\n");
         System.out.println("**********************************************************");
         System.out.println(" Digite o código das cores na sequencia apresentada       ");
-        System.out.println(" 1 ->Vermelho, 2 ->Verde, 3-> Azul, 4-> Amarelo           ");
+        System.out.print(" 1->Vermelho, 2->Verde, 3->Azul, 4->Amarelo");
+        if (gc.gameModel.haveAttempt()) {
+            System.out.println(", 0->Repetir");
+        } else {
+            System.out.println();
+        }
+
         //System.out.println(gc.gameModel.getRaffleds());
         System.out.print("Respostas: " + gc.gameModel.getResponses() + " -> ");
 
