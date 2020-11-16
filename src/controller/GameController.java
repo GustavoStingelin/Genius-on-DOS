@@ -1,8 +1,9 @@
 package controller;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
+import config.App;
 import model.GameModel;
 import model.ScoreModel;
 import view.GameView;
@@ -20,6 +21,23 @@ public class GameController {
         gameModel.dumpAttempt();
         gameModel.addRaffledOnRaffleds(raffleColor());
         gameModel.setActualIndex(0);
+        int response;
+        do {
+            response = GameView.makeLevel(this);
+        } while (response < 1 || response > 4);
+        gameModel.setLevel(response);
+
+        GameView.make(this);
+    }
+
+    public void continueGame() {
+        List<GameModel> listGame = gameModel.load();
+        gameModel.setLevel(listGame.get(listGame.size()-1).getLevel());
+        gameModel.setRaffleds(listGame.get(listGame.size()-1).getRaffleds());
+        gameModel.truncate();
+        gameModel.dumpResponses();
+        gameModel.dumpAttempt();
+        gameModel.setActualIndex(0);
         GameView.make(this);
     }
 
@@ -33,7 +51,15 @@ public class GameController {
     public void nextColor() {
         if (gameModel.getActualIndex() < gameModel.getRaffleds().size()) {
             gameModel.setActualIndex(gameModel.getActualIndex() + 1);
-            GameView.showColor(gameModel.getRaffleds().get(gameModel.getActualIndex() - 1), 1500, this);
+            GameView.showColor(
+                gameModel.getRaffleds().get(
+                    gameModel.getActualIndex() - 1
+                ),
+                App.milOfLevel(
+                    gameModel.getLevel()
+                ),
+                this
+            );
         }
         else {
             for (Integer raffled : gameModel.getRaffleds()) {
@@ -61,20 +87,29 @@ public class GameController {
     }
 
     private int takeResponse() {
-        int response = GameView.makeQuestion(this);
-        if (response >= 1 && response <= 4) {
-            gameModel.tryAttempt();
-            return response;
-        }
-        else if (response == 0 && gameModel.haveAttempt()) {
-            gameModel.tryAttempt();
-            gameModel.setActualIndex(0);
-            gameModel.dumpResponses();
-            nextColor();
-            return -1;
-        }
-        else {
-            return -2;
+        try {
+            int response = GameView.makeQuestion(this);
+            if (response >= 1 && response <= 4) {
+                gameModel.tryAttempt();
+                return response;
+            }
+            else if (response == 9) {
+                gameModel.save();
+                new HomeController().init();
+                return -3;
+            }
+            else if (response == 0 && gameModel.haveAttempt()) {
+                gameModel.tryAttempt();
+                gameModel.setActualIndex(0);
+                gameModel.dumpResponses();
+                nextColor();
+                return -1;
+            }
+            else {
+                return -2;
+            }
+        } catch (Exception e) {
+            return -99;
         }
     }
 
@@ -87,6 +122,10 @@ public class GameController {
         ScoreModel scoreModel = new ScoreModel();
         scoreModel.player = player;
         scoreModel.rounds = rounds;
+        scoreModel.responses =  gameModel.getRaffleds().subList(
+            0,
+            gameModel.getRaffleds().size() - 1
+        );
         scoreModel.save();
     }
 

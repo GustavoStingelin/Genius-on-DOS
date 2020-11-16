@@ -8,7 +8,7 @@ import helpers.Color;
 import view.components.Header;
 
 public class GameView {
-    
+
     public static void make(GameController gc) {
         Header.make();
         System.out.print("\n");
@@ -146,6 +146,7 @@ public class GameView {
         } else {
             System.out.println();
         }
+        System.out.println("9->Salvar estado de jogo");
 
         //System.out.println(gc.gameModel.getRaffleds());
         System.out.print("Respostas: " + gc.gameModel.getResponses() + " -> ");
@@ -194,7 +195,19 @@ public class GameView {
         }
     }
 
+    public static int makeLevel(GameController gc) {
+        Header.make();
+        System.out.println();
+        System.out.println(" Escolha a dificuldade:");
+        System.out.println(" 1->Amador, 2->Fácil, 3->Médio, 4->Difícil");
+        System.out.print(" Escolha: ");
 
-
-
+        Scanner kb = new Scanner(System.in);
+        try {
+            return Integer.parseInt(kb.nextLine());
+        } catch (Exception e) {
+            //System.err.println(e.getMessage());
+            return -1;
+        }
+    }
 }

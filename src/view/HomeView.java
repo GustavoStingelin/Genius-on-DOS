@@ -13,7 +13,7 @@ public class HomeView {
         Header.make();
 
         Scanner kb = new Scanner(System.in);
-        System.out.println(" 1 ->Novo Jogo ");
+        System.out.println(" 1 ->Novo Jogo, 2 ->Carregar jogo salvo");
         System.out.print(" Esolha: ");
         try {
             HomeController hc = new HomeController();
@@ -21,15 +21,21 @@ public class HomeView {
             if (escolha == 1) {
                 gc.init();
             }
+            else if (escolha == 2) {
+                gc.continueGame();
+            }
             else {
                 hc.init();
             }
         } catch (Exception e) {
+            System.err.println(e);
+            kb.nextLine();
+
             try {
                 HomeController hc = new HomeController();
                 hc.init();
             } catch (Exception e2) {
-                System.err.println(e.getMessage());
+                System.err.println(e.getMessage() + e2.getMessage());
             }
         }
         finally {
