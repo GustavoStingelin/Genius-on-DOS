@@ -3,37 +3,37 @@ package view;
 import java.util.Scanner;
 import controller.GameController;
 import controller.HomeController;
+import controller.ReportController;
 import view.components.Header;
 
-public class HomeView {
-    
-    public GameController gc = new GameController();
+public interface HomeView {
 
-    public void make() {
+    public static void make() {
         Header.make();
 
         Scanner kb = new Scanner(System.in);
-        System.out.println(" 1 ->Novo Jogo, 2 ->Carregar jogo salvo");
+        System.out.println(" 1 ->Novo Jogo, 2 ->Carregar jogo salvo, 3 ->Relatórios");
         System.out.print(" Esolha: ");
         try {
-            HomeController hc = new HomeController();
             Integer escolha = Integer.parseInt(kb.nextLine());
             if (escolha == 1) {
-                gc.init();
+                new GameController().init();
             }
             else if (escolha == 2) {
-                gc.continueGame();
+                new GameController().continueGame();
+            }
+            else if (escolha == 3) {
+                new ReportController().init();
             }
             else {
-                hc.init();
+                new HomeController().init();
             }
         } catch (Exception e) {
             System.err.println(e);
             kb.nextLine();
 
             try {
-                HomeController hc = new HomeController();
-                hc.init();
+                new HomeController().init();
             } catch (Exception e2) {
                 System.err.println(e.getMessage() + e2.getMessage());
             }

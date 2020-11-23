@@ -1,6 +1,6 @@
 package view.components;
 
-public class Header {
+public interface Header {
     public static void make(){
         try {
             if (System.getProperty("os.name").contains("Windows")) {

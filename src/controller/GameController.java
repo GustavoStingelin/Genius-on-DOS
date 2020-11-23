@@ -8,7 +8,7 @@ import model.GameModel;
 import model.ScoreModel;
 import view.GameView;
 
-public class GameController {
+public class GameController implements GameView {
     
     public GameModel gameModel = new GameModel();
     
@@ -31,14 +31,22 @@ public class GameController {
     }
 
     public void continueGame() {
-        List<GameModel> listGame = gameModel.load();
-        gameModel.setLevel(listGame.get(listGame.size()-1).getLevel());
-        gameModel.setRaffleds(listGame.get(listGame.size()-1).getRaffleds());
-        gameModel.truncate();
-        gameModel.dumpResponses();
-        gameModel.dumpAttempt();
-        gameModel.setActualIndex(0);
-        GameView.make(this);
+        try {
+            List<GameModel> listGame = gameModel.load();
+            gameModel.setLevel(listGame.get(listGame.size()-1).getLevel());
+            gameModel.setRaffleds(listGame.get(listGame.size()-1).getRaffleds());
+            gameModel.truncate();
+            gameModel.dumpResponses();
+            gameModel.dumpAttempt();
+            gameModel.setActualIndex(0);
+            GameView.make(this);
+        } catch (Exception e) {
+            System.out.println("Não há jogo para carregar");
+            Scanner kb = new Scanner(System.in);
+            kb.nextLine();
+            new HomeController().init();
+            kb.close();
+        }
     }
 
     public void nextLevel() {
@@ -76,6 +84,7 @@ public class GameController {
                     Scanner kb = new Scanner(System.in);
                     kb.nextLine();
                     GameView.gameOver(this);
+                    kb.close();
                 }
             }
             System.out.println("Acertou!! Precione <Enter> para o próximo nível");
@@ -83,6 +92,7 @@ public class GameController {
             kb.nextLine();
             gameModel.dumpResponses();
             nextLevel();
+            kb.close();
         }
     }
 
@@ -118,14 +128,15 @@ public class GameController {
         return random.nextInt(4) + 1;
     }
 
-    public void saveScore(String player, int rounds) {
+    public void saveScore(String player) {
         ScoreModel scoreModel = new ScoreModel();
         scoreModel.player = player;
-        scoreModel.rounds = rounds;
+        scoreModel.rounds = gameModel.getRaffleds().size() - 1;
         scoreModel.responses =  gameModel.getRaffleds().subList(
             0,
             gameModel.getRaffleds().size() - 1
         );
+        scoreModel.level = gameModel.getLevel();
         scoreModel.save();
     }
 

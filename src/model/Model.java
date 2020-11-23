@@ -16,7 +16,7 @@ public abstract class Model<T> {
     public abstract List<T> load();
     public abstract void truncate();
 
-    public void save(String[] aStrings, String filePath) {
+    public static void save(String[] aStrings, String filePath) {
         try {
             BufferedWriter buffWrite = new BufferedWriter(new FileWriter(filePath, true));
             Stream<String> streamStrings = Arrays.stream(aStrings);
@@ -39,7 +39,7 @@ public abstract class Model<T> {
         }
     }
 
-    public List<String> load(String filePath) {
+    public static List<String> load(String filePath) {
         try {
             List<String> list = new ArrayList<>();
             BufferedReader buffRead = new BufferedReader(new FileReader(filePath));
@@ -56,7 +56,7 @@ public abstract class Model<T> {
         }
     }
 
-    public void truncate(String filePath) {
+    public static void truncate(String filePath) {
         try {
             BufferedWriter buffWrite = new BufferedWriter(new FileWriter(filePath));
             buffWrite.write("");

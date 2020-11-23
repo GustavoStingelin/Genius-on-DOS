@@ -1,16 +1,14 @@
 package controller;
 
-import java.io.IOException;
 import view.HomeView;
 
-public class HomeController {
+public class HomeController implements HomeView {
     
     public HomeController() {
     }
 
-    public void init() throws InterruptedException, IOException{
-        HomeView hv = new HomeView();
-        hv.make();
+    public void init() {
+        HomeView.make();
     }
 
 }
