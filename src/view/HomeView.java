@@ -1,6 +1,7 @@
 package view;
 
 import java.util.Scanner;
+
 import controller.GameController;
 import controller.HomeController;
 import controller.ReportController;

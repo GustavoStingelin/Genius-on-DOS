@@ -2,8 +2,7 @@ import controller.HomeController;
 
 public class App {
     public static void main(String[] args) {
-        HomeController hc = new HomeController();
-        hc.init();
+        new HomeController().init();
     }
 }
 

@@ -14,5 +14,6 @@
             "password": "1234",
             "database": "ex2"
         }
-    ]
+    ],
+    "java.dependency.packagePresentation": "hierarchical"
 }
